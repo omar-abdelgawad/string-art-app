@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -42,5 +42,74 @@
 
       <p id="greet-msg"></p>
     </div>
+  </body> -->
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>String Art Generator</title>
+      <style>
+          canvas {
+              border: 1px solid black;
+          }
+      </style>
+  </head>
+  <body>
+      <canvas id="stringArtCanvas"></canvas>
+      <form>
+        <!-- add a button for numNails -->
+        <label for="numNails">Number of Nails:</label>
+        <input type="number" id="numNails" name="numNails" value="100" min="3" max="1000">
+        <button type="submit">Generate String Art</button>
+      </form>
+      <script>
+          const canvas = document.getElementById('stringArtCanvas');
+          const form = document.querySelector('form');
+          form.onsubmit = function(event) {
+              event.preventDefault();
+              const numNails = parseInt(document.getElementById('numNails').value);
+              console.log(numNails);
+          };
+          const ctx = canvas.getContext('2d');
+          canvas.width = 500;
+          canvas.height = 500;
+          
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+          const radius = 200;
+          let numNails = 100;
+          let nails = [];
+    
+          // Calculate nail positions
+          for (let i = 0; i < numNails; i++) {
+              const angle = 2 * Math.PI * i / numNails;
+              const x = centerX + radius * Math.cos(angle);
+              const y = centerY + radius * Math.sin(angle);
+              nails.push({x, y});
+          }
+  
+          // Draw nails
+          nails.forEach(nail => {
+              ctx.beginPath();
+              ctx.arc(nail.x, nail.y, 3, 0, 2 * Math.PI);
+              ctx.fill();
+          });
+  
+          // Connect nails with lines
+          let prevNail = nails[0];
+          for (let i = 1; i <= numNails; i++) {
+              const nextNail = nails[i % numNails];
+              ctx.beginPath();
+              ctx.moveTo(prevNail.x, prevNail.y);
+              ctx.lineTo(nextNail.x, nextNail.y);
+              ctx.stroke();
+              prevNail = nextNail;
+          }
+          console.log(nails);
+      </script>
   </body>
+  </html>
+  
+
 </html>
