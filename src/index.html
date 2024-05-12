@@ -44,7 +44,7 @@
     </div>
   </body> -->
 
-  <!DOCTYPE html>
+  <!-- <!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="UTF-8">
@@ -58,7 +58,6 @@
   <body>
       <canvas id="stringArtCanvas"></canvas>
       <form>
-        <!-- add a button for numNails -->
         <label for="numNails">Number of Nails:</label>
         <input type="number" id="numNails" name="numNails" value="100" min="3" max="1000">
         <button type="submit">Generate String Art</button>
@@ -112,4 +111,30 @@
   </html>
   
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String Art Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>String Art Generator</h1>
+    <canvas id="stringArtCanvas"></canvas>
+
+    <!-- Controls -->
+    <div id="controls">
+      <label for="numNailsInput">Number of Nails:</label>
+      <input type="number" id="numNailsInput" min="10" max="200" value="100">
+      <label for="nailConnections">Enter Nail Connections (e.g., 1-2,3-4):</label>
+      <input type="text" id="nailConnections" value="1-77,3-44,5-67">
+      <button onclick="generateStringArt()">Generate String Art</button>
+    </div>
+
+
+    <script src="main.js"></script>
+</body>
 </html>
+
