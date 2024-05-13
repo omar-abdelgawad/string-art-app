@@ -16,39 +16,46 @@
         <label for="numNails">Number of Nails:</label>
         <input type="number" id="numNails" name="numNails" value="100" min="3" max="1000">
         <button type="submit">Generate String Art</button>
+        <!-- need to change numNails after input -->
       </form>
       <script>
-          const canvas = document.getElementById('stringArtCanvas');
-          const form = document.querySelector('form');
-          form.onsubmit = function(event) {
-              event.preventDefault();
-              const numNails = parseInt(document.getElementById('numNails').value);
-              console.log(numNails);
-          };
-          const ctx = canvas.getContext('2d');
-          canvas.width = 500;
-          canvas.height = 500;
-          
-          const centerX = canvas.width / 2;
-          const centerY = canvas.height / 2;
-          const radius = 200;
-          let numNails = 100;
-          let nails = [];
+        const canvas = document.getElementById('stringArtCanvas');
+        const form = document.querySelector('form');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 500;
+        canvas.height = 500;
+        
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 200;
+        let nails = [];
+        
+        form.onsubmit = function(event) {
+            event.preventDefault();
+            const numNails = parseInt(document.getElementById('numNails').value);
+            console.log(numNails);
     
-          // Calculate nail positions
-          for (let i = 0; i < numNails; i++) {
-              const angle = 2 * Math.PI * i / numNails;
-              const x = centerX + radius * Math.cos(angle);
-              const y = centerY + radius * Math.sin(angle);
-              nails.push({x, y});
-          }
-  
-          // Draw nails
-          nails.forEach(nail => {
-              ctx.beginPath();
-              ctx.arc(nail.x, nail.y, 3, 0, 2 * Math.PI);
-              ctx.fill();
-          });
+            // Clear the nails array
+            nails = [];
+    
+            // Calculate nail positions
+            for (let i = 0; i < numNails; i++) {
+                const angle = 2 * Math.PI * i / numNails;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                nails.push({x, y});
+            }
+    
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+            // Draw the nails
+            nails.forEach(nail => {
+                ctx.beginPath();
+                ctx.arc(nail.x, nail.y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+        };
   
           // Connect nails with lines
           let prevNail = nails[0];
