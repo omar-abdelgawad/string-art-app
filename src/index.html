@@ -16,7 +16,6 @@
         <label for="numNails">Number of Nails:</label>
         <input type="number" id="numNails" name="numNails" value="100" min="3" max="1000">
         <button type="submit">Generate String Art</button>
-        <!-- need to change numNails after input -->
       </form>
       <script>
         const canvas = document.getElementById('stringArtCanvas');
@@ -29,6 +28,14 @@
         const centerY = canvas.height / 2;
         const radius = 200;
         let nails = [];
+
+        // Function to draw a line between two nails
+        function drawLine(nail1, nail2) {
+            ctx.beginPath();
+            ctx.moveTo(nail1.x, nail1.y);
+            ctx.lineTo(nail2.x, nail2.y);
+            ctx.stroke();
+        }
         
         form.onsubmit = function(event) {
             event.preventDefault();
@@ -55,6 +62,13 @@
                 ctx.arc(nail.x, nail.y, 5, 0, 2 * Math.PI);
                 ctx.fill();
             });
+            // Next line should edited using algo api to get the connections
+            const connections = [[100, 50], [50, 25],];   
+            connections.forEach(([nail1, nail2]) => {
+                if (nail1 < numNails && nail2 < numNails){
+                    drawLine(nails[nail1], nails[nail2]);
+                }
+            });
         };
   
           // Connect nails with lines
@@ -66,7 +80,6 @@
               ctx.lineTo(nextNail.x, nextNail.y);
               ctx.stroke();
               prevNail = nextNail;
-
           }
           console.log(nails);
       </script>
