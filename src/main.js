@@ -20,6 +20,7 @@ function generateStringArt() {
       return; 
   }
   const ctx = canvas.getContext('2d');                            // Get the 2D drawing context of the canvas
+  ctx.strokeStyle = 'argb(100,100,100,10)'; // Set the stroke color to light gray
   canvas.width = 500;                                             // Set the canvas width
   canvas.height = 500;                                            // Set the canvas height
 
@@ -47,16 +48,16 @@ function generateStringArt() {
       const x = centerX + radius * Math.cos(angle);               // Calculate the x-coordinate
       const y = centerY + radius * Math.sin(angle);               // Calculate the y-coordinate
       nails[i] = {x, y};                                          // Store each nail's coordinates keyed by its index
-
       ctx.beginPath();                                            // Begin a new path for drawing the nail
       ctx.arc(x, y, 1, 0, 2 * Math.PI);                           // Draw a small circle for the nail
       ctx.fill();                                                 // Fill the circle
   }
 
   console.log("Nail positions:", nails);                         // Log the nails object to the console for debugging
-
+var delayInMilliseconds = 50; //1 second
   // Connect specified nail pairs using the object keys
-  nailPairs.forEach(pair => {
+  nailPairs.forEach((pair , index ) => {
+    setTimeout(function() {
       const [startIndex, endIndex] = pair;                        // Destructure the pair into start and end indices
       if (nails[startIndex] && nails[endIndex]) {                 // Check if both indices exist in the nails object
           const startNail = nails[startIndex];                    // Get the start nail's coordinates
@@ -68,5 +69,6 @@ function generateStringArt() {
       } else {
           console.error('Invalid nail index:', pair);             // Log an error if any index is invalid
       }
+    }, delayInMilliseconds * index);
   });
 }
