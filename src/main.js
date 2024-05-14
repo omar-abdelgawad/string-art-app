@@ -20,9 +20,8 @@ function generateStringArt() {
       return; 
   }
   const ctx = canvas.getContext('2d');                            // Get the 2D drawing context of the canvas
-  ctx.strokeStyle = 'argb(100,100,100,10)'; // Set the stroke color to light gray
-  canvas.width = 500;                                             // Set the canvas width
-  canvas.height = 500;                                            // Set the canvas height
+  canvas.width = 800;                                             // Set the canvas width
+  canvas.height = 800;                                            // Set the canvas height
 
   const numNailsInput = document.getElementById('numNailsInput'); // Get the input element for number of nails
   const numNails = parseInt(numNailsInput.value, 10);             // Parse the number of nails from the input value
@@ -37,7 +36,7 @@ function generateStringArt() {
 
   const centerX = canvas.width / 2;                               // Calculate the center X coordinate of the canvas
   const centerY = canvas.height / 2;                              // Calculate the center Y coordinate of the canvas
-  const radius = 200;                                             // Define the radius for the circular arrangement of nails
+  const radius = 400;                                             // Define the radius for the circular arrangement of nails
   const nails = {};                                               // Create an empty object to store nail positions
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);               // Clear the canvas
@@ -62,6 +61,7 @@ var delayInMilliseconds = 50; //1 second
       if (nails[startIndex] && nails[endIndex]) {                 // Check if both indices exist in the nails object
           const startNail = nails[startIndex];                    // Get the start nail's coordinates
           const endNail = nails[endIndex];                        // Get the end nail's coordinates
+          ctx.strokeStyle = 'rgba(200, 200, 200, 0.1)';           // Set the stroke color to light gray with 50% opacity
           ctx.beginPath();                                        // Begin a new path for drawing the line
           ctx.moveTo(startNail.x, startNail.y);                   // Move to the start nail's position
           ctx.lineTo(endNail.x, endNail.y);                       // Draw a line to the end nail's position
