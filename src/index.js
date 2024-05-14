@@ -1,4 +1,7 @@
 const { invoke } = window.__TAURI__.tauri;
+import { getCanvasContext } from './canvas.js';
+import { getNailPositions } from './nails.js';
+import { drawLinesBetweenNails } from './draw.js';
 
 // image preview function
 var loadFile = function(event) {
@@ -13,51 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
       generateStringArt();
   });
 });
-
-function getNailPositions(numNails, canvas, radius) {
-  const centerX = canvas.width / 2;                               
-  const centerY = canvas.height / 2;                                                                          
-  const nails = {};                                               
-
-  for (let i = 0; i < numNails; i++) {
-    const angle = 2 * Math.PI * i / numNails;                   
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
-    nails[i] = {x, y};
-  }
-
-  return nails;
-}
-
-function getCanvasContext() {
-  const canvas = document.getElementById('stringArtCanvas');
-  if (!canvas) {
-    console.error('Canvas element not found!');
-    return null; 
-  }
-  const ctx = canvas.getContext('2d');
-  canvas.width = 500;
-  canvas.height = 500;
-  return { canvas, ctx };
-}
-function drawLinesBetweenNails(nails, nailPairs, ctx, delayInMilliseconds) {
-  nailPairs.forEach((pair , index ) => {
-    setTimeout(function() {
-      const [startIndex, endIndex] = pair;
-      if (nails[startIndex] && nails[endIndex]) {
-          const startNail = nails[startIndex];
-          const endNail = nails[endIndex];
-          ctx.strokeStyle = 'rgba(87, 87, 87,0.2)';
-          ctx.beginPath();
-          ctx.moveTo(startNail.x, startNail.y);
-          ctx.lineTo(endNail.x, endNail.y);
-          ctx.stroke();
-      } else {
-          console.error('Invalid nail index:', pair);
-      }
-    }, delayInMilliseconds * index);
-  });
-}
 
 
 function generateStringArt() {
