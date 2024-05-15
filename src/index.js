@@ -3,11 +3,6 @@ import { getCanvasContext } from './canvas.js';
 import { getNailPositions } from './nails.js';
 import { drawLinesBetweenNails } from './draw.js';
 
-// image preview function
-var loadFile = function(event) {
-  var image = document.getElementById('output');
-  image.src = URL.createObjectURL(event.target.files[0]);
-};
 
 // form submit function
 document.addEventListener('DOMContentLoaded', function () {
