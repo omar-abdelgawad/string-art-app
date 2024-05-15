@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
-    <meta charset="UTF-8">
-    <title>String Art Generator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>String Art Generator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>String Art Generator</h1>
-    <canvas id="stringArtCanvas"></canvas>
+  <h1>String Art Generator</h1>
+  <canvas id="stringArtCanvas"></canvas>
 
-    <!--Image section-->
-    <div id="image">
-      <p>Upload image:<input type="file"  accept="image/*" id="imginput"  onchange="loadFile(event)"></p>
-      <img id="output" width="500"/>
-    </div>
+  <!--Image section-->
+  <div id="image">
+    <p>Upload image:</p>
+    <input type="file" accept="image/*" id="imageInput" onchange="loadFile(event)">
+    <br>
+    <img id="imageInputPreview" width="500" />
+    <img id="GrayImageInputPreview" width="500" />
+  </div>
 
-    <!-- Controls -->
-    <div id="controls">
-      <form id="stringArtForm">
-        <label for="numNailsInput">Number of Nails:</label>
-        <input type="number" id="numNailsInput" min="10" max="500" value="269">
-        <label for="nailConnections">Enter Nail Connections (e.g., 1-2,3-4):</label>
-        <input type="text" id="nailConnections">
-        <button type="submit">Generate String Art</button>
-      </form>    
-    </div>
+  <!-- Controls -->
+  <div id="controls">
+    <form id="stringArtForm">
+      <label for="numNailsInput">Number of Nails:</label>
+      <input type="number" id="numNailsInput" min="10" max="500" value="269">
+      <label for="nailConnections">Enter Nail Connections (e.g., 1-2,3-4):</label>
+      <input type="text" id="nailConnections">
+      <button type="submit">Generate String Art</button>
+    </form>
+  </div>
 
-    <script type="module" src="index.js"></script>
+  <script type="module" src="index.js"></script>
 
 </body>
-</html>
 
+</html>

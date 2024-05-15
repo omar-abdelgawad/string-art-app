@@ -6,9 +6,9 @@ import { drawLinesBetweenNails } from './draw.js';
 
 // form submit function
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('stringArtForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      generateStringArt();
+  document.getElementById('stringArtForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    generateStringArt();
   });
 });
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function generateStringArt() {
   console.log("Generating string art...");                        // Log to indicate the start of the function
   const { canvas, ctx } = getCanvasContext();
-  const radius = 200; // Define radius here
+  const radius = canvas.width / 2; // Define radius here
   if (!ctx) {
     return;
   }
@@ -28,22 +28,21 @@ function generateStringArt() {
     console.error('Invalid number of nails!');                  // Log an error message if invalid
     return;
   }
-  
-  const nails = getNailPositions(numNails, canvas ,radius);
+
+  const nails = getNailPositions(numNails, canvas, radius);
   for (let i = 0; i < numNails; i++) {
     const nail = nails[i];
     ctx.beginPath();
     ctx.arc(nail.x, nail.y, 1, 0, 2 * Math.PI);
     ctx.fill();
-}
+  }
 
   const nailConnectionsInput = document.getElementById('nailConnections'); // Add this line
 
-  const nailPairs = nailConnectionsInput.value.split(',')
-                    .map(pair => pair.split('-').map(n => parseInt(n, 10) - 1));
+  const nailSequence = nailConnectionsInput.value.split(',').map(n => parseInt(n, 10));
 
   console.log("Nail positions:", nails);                         // Log the nails object to the console for debugging
   var delayInMilliseconds = 50; //1 second
   // Connect specified nail pairs using the object keys
-  drawLinesBetweenNails(nails, nailPairs, ctx, delayInMilliseconds);
+  drawLinesBetweenNails(nails, nailSequence, ctx, delayInMilliseconds);
 }
