@@ -8,6 +8,11 @@ pub struct StringRing {
     drawn_image: Vec<Vec<f64>>,
     width: i32,
     pixelcover: f64,
+    pixelweights: Vec<Vec<f64>>,
+    pegpos_img: Vec<(i32, i32)>,
+    pegindex: i32,
+    lastpegindex: i32,
+    pegpairs: std::collections::HashSet<(i32, i32)>,
 }
 impl StringRing {
     pub fn new() -> Self {
@@ -20,6 +25,11 @@ impl StringRing {
             drawn_image: Vec::new(),
             width: 0,
             pixelcover: 0.0,
+            pixelweights: Vec::new(),
+            pegpos_img: Vec::new(),
+            pegindex: 0,
+            lastpegindex: 0,
+            pegpairs: std::collections::HashSet::new(),
         }
     }
     pub fn set_parameters(
@@ -39,11 +49,47 @@ impl StringRing {
         self.drawn_image = vec![vec![1.0; self.input_image[0].len()]; self.input_image.len()];
         self.width = self.input_image[0].len() as i32;
         self.pixelcover = pixelcover;
+
+        //initialize pixelweights as 1-(self.input_image)/255
+        self.pixelweights = self
+            .input_image
+            .iter()
+            .map(|row| {
+                row.iter()
+                    .map(|&value| 1.0 - value / 255.0)
+                    .collect::<Vec<f64>>()
+            })
+            .collect::<Vec<Vec<f64>>>();
+        self.pegpos_img = Vec::new();
+        for i in 0..self.pegcount {
+            let sz = self.width as f64 / 2.0;
+            let (px, py) = circlepoint(sz, sz, sz, i, self.pegcount);
+            self.pegpos_img.push((px, py));
+        }
+    }
+    pub fn update(&mut self) -> i32 {
+        self.pegindex += 1;
+        self.pegindex
+    }
+    /// returns true if the point is in self.pegpairs
+    fn haspair(&self, i: i32, j: i32) -> bool {
+        if j < i {
+            return self.pegpairs.contains(&(j, i));
+        }
+        self.pegpairs.contains(&(i, j))
+    }
+    /// inserts the pair (i,j) into self.pegpairs
+    fn insertpair(&mut self, i: i32, j: i32) {
+        if j < i {
+            self.pegpairs.insert((j, i));
+        } else {
+            self.pegpairs.insert((i, j));
+        }
     }
 }
-/*
-converts a string of space seperated values in range 0-255 to a 2d array of floats
-*/
+///
+///converts a string of space seperated values in range 0-255 to a 2d array of floats
+///
 pub fn str_to_image(data: &str, width: i32, height: i32) -> Vec<Vec<f64>> {
     assert_eq!(width, height);
     let image_values = data.split(" ");
