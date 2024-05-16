@@ -56,7 +56,7 @@ impl StringRing {
             .iter()
             .map(|row| {
                 row.iter()
-                    .map(|&value| 1.0 - value / 255.0)
+                    .map(|&value| 1.0 - (value / 255.0))
                     .collect::<Vec<f64>>()
             })
             .collect::<Vec<Vec<f64>>>();
@@ -68,7 +68,61 @@ impl StringRing {
         }
     }
     pub fn update(&mut self) -> i32 {
-        self.pegindex += 1;
+        let mut min = 255.0;
+        let mut max = 0.0;
+        for row in &self.pixelweights {
+            for &value in row {
+                if value < min {
+                    min = value;
+                }
+                if value > max {
+                    max = value;
+                }
+            }
+        }
+        println!("{min} {max}");
+        let (x1, y1) = self.pegpos_img[self.pegindex as usize];
+        let mut highest = 0.0;
+        let mut highesti = 0;
+        for i in 0..self.pegcount {
+            if i == self.pegindex || self.haspair(self.pegindex, i) {
+                continue;
+            }
+            let (x2, y2) = self.pegpos_img[i as usize];
+            let mut total = 0.0;
+            let mut count = 0;
+            for (bx, by) in bresenham(x1, y1, x2, y2) {
+                if (bx < 0 || bx >= self.width) || (by < 0 || by >= self.width) {
+                    continue;
+                }
+                total += self.pixelweights[by as usize][bx as usize];
+                count += 1;
+            }
+            total /= count as f64;
+            if total > highest {
+                highest = total;
+                highesti = i;
+            }
+        }
+        let (x2, y2) = self.pegpos_img[highesti as usize];
+        for (bx, by) in bresenham(x1, y1, x2, y2) {
+            if (bx < 0 || bx >= self.width) || (by < 0 || by >= self.width) {
+                continue;
+            }
+            self.pixelweights[by as usize][bx as usize] -= self.pixelcover;
+            self.pixelweights[by as usize][bx as usize] =
+                self.pixelweights[by as usize][bx as usize].max(0.0);
+            self.drawn_image[by as usize][bx as usize] -= self.pixelcover;
+            if self.drawn_image[by as usize][bx as usize] < 0.0 {
+                self.drawn_image[by as usize][bx as usize] = 0.0;
+            }
+        }
+
+        self.lastpegindex = self.pegindex;
+        self.pegindex = highesti;
+        self.insertpair(self.pegindex, self.lastpegindex);
+        println!("{highesti}");
+        println!("{}", self.width);
         self.pegindex
     }
     /// returns true if the point is in self.pegpairs
