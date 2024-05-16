@@ -7,7 +7,7 @@ function drawLinesBetweenNails(nails, nailSequence, ctx, delayInMilliseconds) {
     ctx.moveTo(startNail.x, startNail.y);
     ctx.lineTo(endNail.x, endNail.y);
     ctx.stroke();
-    setTimeout(() => { }, delayInMilliseconds);
+    setTimeout(() => { }, delayInMilliseconds); //doesn't actually pause the loop
   }
 }
 export { drawLinesBetweenNails };
