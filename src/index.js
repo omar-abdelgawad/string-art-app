@@ -18,6 +18,7 @@ document.getElementById('imageInput').addEventListener('change', async function 
   const file = event.target.files[0];
   const reader = new FileReader();
   reader.onload = function (e) {
+    // first resize the image to (900,900)
     const inputImagePreview = document.getElementById('imageInputPreview');
     inputImagePreview.src = e.target.result;
     // Load the image into a canvas to convert it to grayscale
@@ -64,29 +65,29 @@ document.getElementById('imageInput').addEventListener('change', async function 
       }
       invoke('insert_data', {
         data: grayImageAsSpaceSeparatedString,
-        width: canvas.width,
-        height: canvas.height,
+        width: canvas_tmp.width,
+        height: canvas_tmp.height,
         numNails: numNails,
         opacity: 0.3,
       });
-      const numIterations = 1000;
+      const numIterations = 2000;
       let cur_nail = 0;
-      let delayInMilliseconds = 1000;
-      for (let i = 0; i < numIterations; i++) {
-        invoke('get_next_nail').then((nail) => {
-          nail = nail % numNails;
-          console.log(nail);
+      let delayInMilliseconds = 5;
+      async function performLoop() {
+        for (let i = 0; i < numIterations; i++) {
+          const nail = await invoke('get_next_nail');
           const startNail = nails[cur_nail];
-          const endNail = nails[nail];
-          ctx.strokeStyle = 'rgba(87, 87, 87,0.8)';
+          const endNail = nails[nail % numNails];
+          ctx.strokeStyle = 'rgba(87, 87, 87,0.2)';
           ctx.beginPath();
           ctx.moveTo(startNail.x, startNail.y);
           ctx.lineTo(endNail.x, endNail.y);
           ctx.stroke();
           cur_nail = nail;
-          setTimeout(() => { }, delayInMilliseconds);
-        });
+          await new Promise(resolve => setTimeout(resolve, delayInMilliseconds));
+        }
       }
+      performLoop();
     };
   };
   reader.readAsDataURL(file);
