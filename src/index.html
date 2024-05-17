@@ -12,7 +12,7 @@
   <canvas id="stringArtCanvas"></canvas>
 
   <!-- Download String Art -->
-  <div id = "downloadStrinArt">
+  <div id="downloadStrinArt">
     <a id="download" download="string-art.png">
       <button type="button" onClick="downloadImage()">Download String Art</button>
     </a>
@@ -20,20 +20,18 @@
 
   <!-- Image editting -->
   <input type="file" id="imageUpload" accept="image/*">
-    <br>
-    <canvas id="imageCanvas"></canvas>
-    <br>
-    <label for="zoomSlider">Zoom:</label>
-    <input type="range" id="zoomSlider" min="0.1" max="2" value="1" step="0.1">
-    <br>
-    <label for="rotateSlider">Rotate:</label>
-    <input type="range" id="rotateSlider" min="0" max="360" value="0" step="1">
-    <button id="updateButton">Update Image</button>
+  <br>
+  <canvas id="imageCanvas" width="300" height="300"></canvas>
+  <br>
+  <label for="zoomSlider">Zoom:</label>
+  <input type="range" id="zoomSlider" min="0.1" max="2" value="1" step="0.1">
+  <br>
+  <label for="rotateSlider">Rotate:</label>
+  <input type="range" id="rotateSlider" min="0" max="360" value="0" step="1">
+  <button id="updateButton">Update Image</button>
 
   <!--Image section-->
   <div id="image">
-    <br>
-    <img id="imageInputPreview" width="150" />
     <img id="grayImageInputPreview" width="150" />
   </div>
 
@@ -42,9 +40,6 @@
     <form id="stringArtForm">
       <label for="numNailsInput">Number of Nails:</label>
       <input type="number" id="numNailsInput" min="10" max="500" value="269">
-      <label for="nailConnections">Enter Nail Connections (e.g., 1-2,3-4):</label>
-      <input type="text" id="nailConnections">
-      <button type="submit">Generate String Art</button>
     </form>
   </div>
 
