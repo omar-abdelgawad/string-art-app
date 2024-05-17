@@ -34,7 +34,6 @@ window.onload = function() {
 //   };
 // });
 
-
 // upload image function
 document.getElementById('updateButton').addEventListener('click', async function (event) { 
     const img = new Image(); 
@@ -102,7 +101,6 @@ document.getElementById('updateButton').addEventListener('click', async function
     };
 });
 
-
 function generateStringArt() {
   console.log("Generating string art...");                        // Log to indicate the start of the function
   const { canvas, ctx } = getCanvasContext();
@@ -135,4 +133,12 @@ function generateStringArt() {
   var delayInMilliseconds = 50; //1 second
   // Connect specified nail pairs using the object keys
   drawLinesBetweenNails(nails, nailSequence, ctx, delayInMilliseconds);
+}
+
+window.downloadImage = function() {
+  var download = document.getElementById("download");
+  var image = document.getElementById("stringArtCanvas").toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+  download.setAttribute("href", image);
+  console.log("download")
 }

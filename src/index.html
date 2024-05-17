@@ -10,6 +10,14 @@
 <body>
   <h1>String Art Generator</h1>
   <canvas id="stringArtCanvas"></canvas>
+
+  <!-- Download String Art -->
+  <div id = "downloadStrinArt">
+    <a id="download" download="string-art.png">
+      <button type="button" onClick="downloadImage()">Download String Art</button>
+    </a>
+  </div>
+
   <!-- Image editting -->
   <input type="file" id="imageUpload" accept="image/*">
     <br>
