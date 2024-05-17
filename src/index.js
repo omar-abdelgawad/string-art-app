@@ -2,6 +2,8 @@ const { invoke } = window.__TAURI__.tauri;
 import { getCanvasContext } from './canvas.js';
 import { getNailPositions } from './nails.js';
 import { drawLinesBetweenNails } from './draw.js';
+import { img, initializeImageUpload } from './loadImage.js';
+import { drawImage } from './drawImage.js';
 // import { uploading } from './uploading.js';
 
 
@@ -13,6 +15,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+window.onload = function() {
+  let canvas = document.getElementById('imageCanvas');
+  let ctx = canvas.getContext('2d');
+
+  initializeImageUpload(canvas, ctx, drawImage);
+}
+document.getElementById('downloadButton').addEventListener('click', function() {
+  var canvas = document.getElementById('imageCanvas');
+  var image = canvas.toDataURL('image/png');
+  var link = document.createElement('a');
+  link.download = 'edited_image.png';
+  link.href = image;
+  link.click();
+});
 // upload image function
 document.getElementById('imageInput').addEventListener('change', async function (event) {
   const file = event.target.files[0];
