@@ -1,15 +1,13 @@
 const { invoke } = window.__TAURI__.tauri;
 import { getCanvasContext } from './canvas.js';
 import { getNailPositions } from './nails.js';
-import { drawLinesBetweenNails } from './draw.js';
-import { img, initializeImageUpload } from './loadImage.js';
+import { initializeImageUpload } from './loadImage.js';
 import { drawImage } from './drawImage.js';
-// import { uploading } from './uploading.js';
 
 
 
 
-window.onload = function () {
+window.onload = () => {
   let canvas = document.getElementById('imageCanvas');
   let ctx = canvas.getContext('2d');
 
@@ -84,7 +82,7 @@ document.getElementById('updateButton').addEventListener('click', async function
 
 
 
-window.downloadImage = function () {
+window.downloadImage = () => {
   var download = document.getElementById("download");
   var image = document.getElementById("stringArtCanvas").toDataURL("image/png")
     .replace("image/png", "image/octet-stream");
