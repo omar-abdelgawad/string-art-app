@@ -21,7 +21,7 @@ window.onload = function() {
 
   initializeImageUpload(canvas, ctx, drawImage);
 }
-document.getElementById('downloadButton').addEventListener('click', function() {
+document.getElementById('updateButton').addEventListener('click', function() {
   var canvas = document.getElementById('imageCanvas');
   var image = canvas.toDataURL('image/png');
   var link = document.createElement('a');
@@ -29,6 +29,8 @@ document.getElementById('downloadButton').addEventListener('click', function() {
   link.href = image;
   link.click();
 });
+
+
 // upload image function
 document.getElementById('imageInput').addEventListener('change', async function (event) {
   const file = event.target.files[0];
