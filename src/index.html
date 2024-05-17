@@ -51,24 +51,12 @@
         image to your device.</li>
     </ul>
 
-    <style>
-      #helpSection {
-        display: none;
-        padding: 20px;
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        background-color: #f9f9f9;
-      }
-    </style>
 
     <script>
       function showHelp() {
-        var helpSection = document.getElementById('helpSection');
-        if (helpSection.style.display === 'none') {
-          helpSection.style.display = 'block';
-        } else {
-          helpSection.style.display = 'none';
-        }
+        const helpSection = document.getElementById('helpSection');
+        let computedStyle = window.getComputedStyle(helpSection);
+        helpSection.style.display = computedStyle.display === 'none' ? 'block' : 'none';
       }
     </script>
   </div>
