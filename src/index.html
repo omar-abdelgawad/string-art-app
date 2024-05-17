@@ -48,6 +48,40 @@
     </form>
   </div>
 
+  <!-- Button to toggle the help section -->
+  <button onclick="showHelp()">Help Section</button>
+  <div id="helpSection">
+      <h2>HELP: User Guide for String Art Generator</h2>
+      <ul>
+          <li>Click the "Upload Image" button to select and upload an image from your device.</li>
+          <li>Drag the greyscale preview of your image to position it within the circular frame.</li>
+          <li>Use the slider below the image to adjust the zoom to your preference.</li>
+          <li>After adjusting the image, click on "Update Image" for the generator to start.</li>
+          <li>Once the string art is generated, click "Download String Art" button to download and save your string art image to your device.</li>
+      </ul>
+      
+      <style>
+        #helpSection {
+            display: none;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+      </style>
+      
+      <script>
+          function showHelp() {
+              var helpSection = document.getElementById('helpSection');
+              if (helpSection.style.display === 'none') {
+                  helpSection.style.display = 'block'; 
+              } else {
+                  helpSection.style.display = 'none';
+              }
+          }
+      </script>
+  </div>
+
   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="helpLink" target="_blank" rel="noopener noreferrer">Help</a>
 
   <script type="module" src="index.js"></script>
