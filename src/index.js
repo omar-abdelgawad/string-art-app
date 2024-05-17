@@ -51,7 +51,6 @@ document.getElementById('updateButton').addEventListener('click', async function
       ctx.arc(nail.x, nail.y, 1, 0, 2 * Math.PI);
       ctx.fill();
     }
-    console.log(grayImageAsSpaceSeparatedString, canvas_tmp.width, canvas_tmp.height, numNails);
     invoke('insert_data', {
       data: grayImageAsSpaceSeparatedString,
       width: canvas_tmp.width,
@@ -87,5 +86,4 @@ window.downloadImage = () => {
   var image = document.getElementById("stringArtCanvas").toDataURL("image/png")
     .replace("image/png", "image/octet-stream");
   download.setAttribute("href", image);
-  console.log("download")
 }
