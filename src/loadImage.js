@@ -20,6 +20,11 @@ export function initializeImageUpload(canvas, ctx, drawImage) {
         reader.readAsDataURL(e.target.files[0]);
     });
 
+    canvas.onwheel = (e) => {
+        e.preventDefault();
+        zoomSlider.value = parseFloat(zoomSlider.value) - e.deltaY / 1000;
+        drawImage(img, canvas, ctx, zoomSlider.value, rotateSlider.value);
+    }
     zoomSlider.addEventListener('input', () => {
         drawImage(img, canvas, ctx, zoomSlider.value, rotateSlider.value);
     });
