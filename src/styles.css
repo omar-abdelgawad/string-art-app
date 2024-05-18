@@ -3,10 +3,8 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-
-  color: #0f0f0f;
-  background-color: #f6f6f6;
-
+  color: var(--text-color);
+  background-color: var(--background-color);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,43 +12,30 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.container {
+body {
   margin: 0;
-  padding-top: 10vh;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  min-height: 100vh;
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 h1 {
-  text-align: center;
+  margin-bottom: 20px;
+}
+
+#stringArtCanvas {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+#downloadStrinArt {
+  margin-bottom: 20px;
 }
 
 input,
@@ -61,10 +46,11 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
+  color: var(--button-text-color);
+  background-color: var(--button-bg-color);
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  margin: 5px;
 }
 
 button {
@@ -74,9 +60,10 @@ button {
 button:hover {
   border-color: #396cd8;
 }
+
 button:active {
   border-color: #396cd8;
-  background-color: #e8e8e8;
+  background-color: var(--button-active-bg-color);
 }
 
 input,
@@ -84,26 +71,84 @@ button {
   outline: none;
 }
 
-#greet-input {
-  margin-right: 5px;
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+#helpSection {
+  display: none;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  background-color: var(--help-section-bg-color);
+  color: var(--text-color);
+}
+
+/* Flexbox for horizontal layout */
+#image-section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+#image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#imageCanvas {
+  margin-top: 20px;
+}
+
+/* Container for sliders and input fields */
+#controls {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+#controls label,
+#controls input,
+#controls button {
+  margin: 0 10px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
+    --background-color: #2f2f2f;
+    --text-color: #f6f6f6;
+    --button-bg-color: #3a3a3a;
+    --button-text-color: #f6f6f6;
+    --button-active-bg-color: #575757;
+    --help-section-bg-color: #3a3a3a;
   }
 
   a:hover {
     color: #24c8db;
   }
 
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
+  #helpSection {
+    border-color: #555;
   }
-  button:active {
-    background-color: #0f0f0f69;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #f6f6f6;
+    --text-color: #0f0f0f;
+    --button-bg-color: #ffffff;
+    --button-text-color: #0f0f0f;
+    --button-active-bg-color: #e8e8e8;
+    --help-section-bg-color: #f9f9f9;
   }
 }

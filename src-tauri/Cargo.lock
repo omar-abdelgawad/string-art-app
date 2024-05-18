@@ -2456,6 +2456,7 @@ version = "0.0.0"
 dependencies = [
  "serde",
  "serde_json",
+ "stringart",
  "tauri",
  "tauri-build",
 ]
@@ -2484,6 +2485,14 @@ dependencies = [
  "phf_shared 0.10.0",
  "proc-macro2",
  "quote",
+]
+
+[[package]]
+name = "stringart"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
