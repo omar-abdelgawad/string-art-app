@@ -25,8 +25,8 @@ struct AppState {
 }
 
 //////////////////////////
-mod utils;
-use utils::{str_to_image, StringRing};
+// mod utils;
+use stringart::{str_to_image, StringRing};
 #[tauri::command]
 fn insert_data(
     data: &str,
