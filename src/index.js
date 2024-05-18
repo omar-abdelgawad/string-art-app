@@ -45,6 +45,7 @@ document.getElementById('updateButton').addEventListener('click', async function
     const radius = canvas.width / 2;
     const numNails = parseInt(document.getElementById('numNailsInput').value, 10);
     const nails = getNailPositions(numNails, canvas, radius);
+    const opacity = parseFloat(document.getElementById('opacityInput').value);
     for (let i = 0; i < numNails; i++) {
       const nail = nails[i];
       ctx.beginPath();
@@ -56,9 +57,9 @@ document.getElementById('updateButton').addEventListener('click', async function
       width: canvas_tmp.width,
       height: canvas_tmp.height,
       numNails: numNails,
-      opacity: 0.3,
+      opacity: opacity,
     });
-    const numIterations = 2000;
+    const numIterations = parseInt(document.getElementById('numStringsInput').value, 10);
     let cur_nail = 0;
     let delayInMilliseconds = 5;
     async function performLoop() {
@@ -66,7 +67,7 @@ document.getElementById('updateButton').addEventListener('click', async function
         const nail = await invoke('get_next_nail');
         const startNail = nails[cur_nail];
         const endNail = nails[nail % numNails];
-        ctx.strokeStyle = 'rgba(87, 87, 87,0.2)';
+        ctx.strokeStyle = `rgba(87, 87, 87,${opacity})`;
         ctx.beginPath();
         ctx.moveTo(startNail.x, startNail.y);
         ctx.lineTo(endNail.x, endNail.y);
