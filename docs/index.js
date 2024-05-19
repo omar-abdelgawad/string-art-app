@@ -1,5 +1,7 @@
 import * as wasm from "wasm-string-art";
-document.getElementById('upload-file').addEventListener('change', function() {
+
+const uploadFileElement = document.getElementById('upload-file');
+uploadFileElement.addEventListener('change', () => {
     document.querySelector('.landing-container').style.display = 'none';
     document.querySelector('.container').style.display = 'block';
     document.querySelector('.help-button').style.display = 'block';
@@ -30,25 +32,16 @@ const opacityRange = document.getElementById('opacity');
 const opacityNumber = document.getElementById('opacity-number');
 syncInput(opacityRange, opacityNumber);
 
-document.querySelector('.help-button').addEventListener('click', function() {
-    document.querySelector('.container').style.display = 'none';
-    document.querySelector('.help-button').style.display = 'none';
-    document.querySelector('.help-container').style.display = 'block';
-});
-
-document.querySelector('.back-button').addEventListener('click', function() {
-    document.querySelector('.container').style.display = 'block';
-    document.querySelector('.help-button').style.display = 'block';
-    document.querySelector('.help-container').style.display = 'none';
-});
-document.querySelector('.help-button').addEventListener('click', function() {
+const helpButton = document.querySelector('.help-button');
+helpButton.addEventListener('click', () => {
     document.querySelector('.container').style.display = 'none';
     document.querySelector('.help-button').style.display = 'none';
     document.querySelector('.help-container').style.display = 'block';
     document.querySelector('.back-button').style.display = 'block'; // Show the back button
 });
 
-document.querySelector('.back-button').addEventListener('click', function() {
+const helpBackButton = document.querySelector('.back-button');
+helpBackButton.addEventListener('click', () => {
     document.querySelector('.container').style.display = 'block';
     document.querySelector('.help-button').style.display = 'block';
     document.querySelector('.help-container').style.display = 'none';
