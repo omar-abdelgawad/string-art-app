@@ -1,14 +1,14 @@
 .light-mode {
-    --background-color: #fffcf2; 
-    --text-color: #121212; 
-    --accent-color: #9381ff; 
+    --background-color: #fffcf2;
+    --text-color: #121212;
+    --accent-color: #9381ff;
 }
 
 /* Dark Mode */
 .dark-mode {
-    --background-color: #190618; 
-    --text-color: #fcfbf6; 
-    --accent-color: #e0caac; 
+    --background-color: #190618;
+    --text-color: #fcfbf6;
+    --accent-color: #e0caac;
 }
 
 body {
@@ -23,7 +23,8 @@ body {
     overflow: auto;
 }
 
-.container, .landing-container {
+.container,
+.landing-container {
     text-align: center;
     background: var(--background-color);
     padding: 20px;
@@ -49,7 +50,8 @@ h1 {
     border-radius: 8px;
 }
 
-button, input[type="file"] {
+button,
+input[type="file"] {
     display: block;
     margin: 16px auto;
     padding: 12px 24px;
@@ -62,7 +64,8 @@ button, input[type="file"] {
     transition: background-color 0.3s ease;
 }
 
-button:hover, input[type="file"]:hover {
+button:hover,
+input[type="file"]:hover {
     background-color: darken(var(--accent-color), 10%);
 }
 
@@ -92,7 +95,8 @@ input[type="file"] {
     color: var(--text-color);
 }
 
-.control-group input[type="range"], .control-group input[type="number"] {
+.control-group input[type="range"],
+.control-group input[type="number"] {
     flex: 1;
     padding: 6px;
     border: 1px solid var(--text-color);
@@ -177,6 +181,7 @@ input[type="range"]::-ms-thumb {
 .back-button:hover {
     background-color: darken(var(--accent-color), 10%);
 }
+
 .toggle-button {
     position: fixed;
     bottom: 20px;
@@ -184,9 +189,12 @@ input[type="range"]::-ms-thumb {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #FF2400; /* Scarlet background */
-    color: #e0e0e0; /* Light text color */
+    background-color: #FF2400;
+    /* Scarlet background */
+    color: #e0e0e0;
+    /* Light text color */
     cursor: pointer;
     font-size: 16px;
-    z-index: 1000; /* Ensure the button is above other elements */
+    z-index: 1000;
+    /* Ensure the button is above other elements */
 }

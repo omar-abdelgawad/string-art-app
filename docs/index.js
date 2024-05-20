@@ -1,65 +1,84 @@
 import * as wasm from "wasm-string-art";
-
-const uploadFileElement = document.getElementById('upload-file');
-uploadFileElement.addEventListener('change', () => {
-    document.querySelector('.landing-container').style.display = 'none';
-    document.querySelector('.container').style.display = 'block';
-    document.querySelector('.help-button').style.display = 'block';
-});
-
-function syncInput(range, number) {
-    range.addEventListener('input', () => number.value = range.value);
-    number.addEventListener('input', () => range.value = number.value);
+import { initializePage } from "./initialize-page.js";
+import { getNailPositions } from "../src/nails.js";
+let inputImage = new Image();
+let inputImageData = null;
+const mainCanvas = document.getElementById('string-art-animation');
+const mainCanvasCtx = mainCanvas.getContext('2d');
+function initializeUploadButton() {
+    const uploadFileElement = document.getElementById('upload-file');
+    uploadFileElement.addEventListener('change', (e) => {
+        document.querySelector('.landing-container').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+        document.querySelector('.help-button').style.display = 'block';
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            inputImage.onload = () => {
+                mainCanvas.width = 300;
+                mainCanvas.height = 300;
+                mainCanvasCtx.drawImage(inputImage, 0, 0, mainCanvas.width, mainCanvas.height);
+                inputImageData = mainCanvasCtx.getImageData(0, 0, mainCanvas.width, mainCanvas.height).data;
+                // console.log(inputImageData, inputImageData.length);
+            }
+            inputImage.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    });
+}
+function resizeImage(image, width, height) {
+    const offScreenCanvas = document.createElement('canvas');
+    offScreenCanvas.width = width;
+    offScreenCanvas.height = height;
+    const offScreenCtx = offScreenCanvas.getContext('2d');
+    offScreenCtx.drawImage(image, 0, 0, width, height);
+    const resizedImage = new Image();
+    resizedImage.src = offScreenCanvas.toDataURL();
+    return resizedImage;
 }
 
-const zoomRange = document.getElementById('zoom');
-const zoomNumber = document.getElementById('zoom-number');
-syncInput(zoomRange, zoomNumber);
 
-const rotateRange = document.getElementById('rotate');
-const rotateNumber = document.getElementById('rotate-number');
-syncInput(rotateRange, rotateNumber);
+import { StringRingWrapper } from "wasm-string-art";
+import { memory } from "wasm-string-art/wasm_stringart_bg";
+function main() {
+    initializeUploadButton();
+    initializePage();
+    wasm.greet();
+    const updateButton = document.getElementById('update-button');
+    updateButton.addEventListener('click', () => {
+        const nails = document.getElementById('nails').value;
+        const numIterations = document.getElementById('strings').value;
+        const opacity = document.getElementById('opacity').value;
+        const stringRingWrapper = StringRingWrapper.new(300, 300, nails, opacity);
 
-const nailsRange = document.getElementById('nails');
-const nailsNumber = document.getElementById('nails-number');
-syncInput(nailsRange, nailsNumber);
-
-const stringsRange = document.getElementById('strings');
-const stringsNumber = document.getElementById('strings-number');
-syncInput(stringsRange, stringsNumber);
-
-const opacityRange = document.getElementById('opacity');
-const opacityNumber = document.getElementById('opacity-number');
-syncInput(opacityRange, opacityNumber);
-
-const helpButton = document.querySelector('.help-button');
-helpButton.addEventListener('click', () => {
-    document.querySelector('.container').style.display = 'none';
-    document.querySelector('.help-button').style.display = 'none';
-    document.querySelector('.help-container').style.display = 'block';
-    document.querySelector('.back-button').style.display = 'block'; // Show the back button
-});
-
-const helpBackButton = document.querySelector('.back-button');
-helpBackButton.addEventListener('click', () => {
-    document.querySelector('.container').style.display = 'block';
-    document.querySelector('.help-button').style.display = 'block';
-    document.querySelector('.help-container').style.display = 'none';
-    document.querySelector('.back-button').style.display = 'none'; // Hide the back button again
-});
-
-function toggleMode() {
-    if (document.body.classList.contains('dark-mode')) {
-        // If the body has the 'dark-mode' class, remove it and add the 'light-mode' class
-        document.body.classList.remove('dark-mode');
-        document.body.classList.add('light-mode');
-    } else {
-        // If the body doesn't have the 'dark-mode' class, remove the 'light-mode' class and add the 'dark-mode' class
-        document.body.classList.remove('light-mode');
-        document.body.classList.add('dark-mode');
-    }
+        const inputImagePtr = stringRingWrapper.input_image_pointer();
+        const inputImageInStringWrapper = new Uint8Array(memory.buffer, inputImagePtr, 300 * 300 * 4);
+        for (let i = 0; i < inputImageData.length; i += 4) {
+            inputImageInStringWrapper[i] = inputImageData[i];
+            inputImageInStringWrapper[i + 1] = inputImageData[i + 1];
+            inputImageInStringWrapper[i + 2] = inputImageData[i + 2];
+            inputImageInStringWrapper[i + 3] = inputImageData[i + 3];
+        }
+        stringRingWrapper.update_input_image_to_greyscale();
+        // remove the image in the mainCanvas
+        mainCanvasCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+        let cur_nail = 0;
+        let delayInMilliseconds = 5;
+        const nailPositions = getNailPositions(nails, mainCanvas, mainCanvas.width / 2);
+        async function performLoop() {
+            for (let i = 0; i < numIterations; i++) {
+                const nextNail = stringRingWrapper.update();
+                const startNail = nailPositions[cur_nail];
+                const endNail = nailPositions[nextNail];
+                mainCanvasCtx.strokeStyle = `rgba(87, 87, 87,${opacity})`;
+                mainCanvasCtx.beginPath();
+                mainCanvasCtx.moveTo(startNail.x, startNail.y);
+                mainCanvasCtx.lineTo(endNail.x, endNail.y);
+                mainCanvasCtx.stroke();
+                cur_nail = nextNail;
+                await new Promise(resolve => setTimeout(resolve, delayInMilliseconds));
+            }
+        }
+        performLoop();
+    })
 }
-const toggleButton = document.getElementById('toggle-button');
-toggleButton.addEventListener('click', toggleMode);
-
-wasm.greet();
+main();
