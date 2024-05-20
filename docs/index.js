@@ -42,7 +42,6 @@ import { memory } from "wasm-string-art/wasm_stringart_bg";
 function main() {
     initializeUploadButton();
     initializePage();
-    wasm.greet();
     const updateButton = document.getElementById('update-button');
     updateButton.addEventListener('click', () => {
         const nails = document.getElementById('nails').value;

@@ -11,5 +11,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin(['index.html']),
     new CopyWebpackPlugin(['styles.css']),
+    new CopyWebpackPlugin(['initialize-page.js']),
+    new CopyWebpackPlugin(['../src/nails.js']),
   ],
 };

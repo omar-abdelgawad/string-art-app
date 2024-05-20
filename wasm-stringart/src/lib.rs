@@ -9,10 +9,10 @@ extern "C" {
     fn alert(s: &str);
 }
 
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, wasm-stringart! by Omar");
-}
+// #[wasm_bindgen]
+// pub fn greet() {
+//     alert("Hello, wasm-stringart! by Omar");
+// }
 
 use stringart::StringRing;
 #[wasm_bindgen]
