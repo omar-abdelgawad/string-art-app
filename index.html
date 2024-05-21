@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Art Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="light-mode">
+    <div><button id="toggle-button" class="toggle-button">Toggle Mode</button></div>
+    <div class="landing-container">
+        <h1>String Art Generator</h1>
+        <input type="file" id="upload-file" accept="image/*">
+    </div>
+
+    <div class="container" style="display: none;">
+        <h1>String Art Generator</h1>
+        <div class="art-display" id="art-display">
+            <canvas id="string-art-animation"></canvas>
+        </div>
+        <button class="download-button">Download String Art</button>
+        <div class="controls">
+            <div class="control-group">
+                <label for="zoom">Zoom:</label>
+                <input type="range" id="zoom" name="zoom" min="1" max="2" value="50" step="0.01">
+                <input type="number" id="zoom-number" name="zoom-number" min="0" max="100" value="2">
+            </div>
+            <div class="control-group">
+                <label for="rotate">Rotate:</label>
+                <input type="range" id="rotate" name="rotate" min="0" max="360" value="0">
+                <input type="number" id="rotate-number" name="rotate-number" min="0" max="360" value="0">
+            </div>
+            <div class="control-group">
+                <label for="nails">Number of Nails:</label>
+                <input type="range" id="nails" name="nails" min="50" max="500" value="256">
+                <input type="number" id="nails-number" name="nails-number" min="50" max="500" value="256">
+            </div>
+            <div class="control-group">
+                <label for="strings">Number of Strings:</label>
+                <input type="range" id="strings" name="strings" min="10" max="3000" value="1000">
+                <input type="number" id="strings-number" name="strings-number" min="10" max="3000" value="1000">
+            </div>
+            <div class="control-group">
+                <label for="opacity">Opacity:</label>
+                <input type="range" id="opacity" name="opacity" min="0" max="1" step="0.1" value="0.2">
+                <input type="number" id="opacity-number" name="opacity-number" min="0" max="1" step="0.1" value="0.2">
+            </div>
+        </div>
+        <button class="update-button" id="update-button">Update Image</button>
+    </div>
+
+    <div class="help-container" style="display: none;">
+        help goess here
+        <button class="back-button">Back</button>
+    </div>
+    <button class="help-button">Help</button>
+    <script type="module" src="bootstrap.js"></script>
+</body>
+
+</html>
