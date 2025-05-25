@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\geometry{
+    a4paper,
+    left=1in,
+    right=1in,
+    bottom=1in,
+    top=0.5in
+}
+
+\title{\vspace{-1.5cm}String Art Generator}
+\author{Project Documentation}
+
+\begin{document}
+
+\maketitle
+
+\section{Goal}
+The String Art Generator project aims to transform digital images into string art representations by simulating the process of wrapping a single continuous string around a set of fixed points (nails) arranged in a circle.
+
+\section{Technical Approach}
+
+\subsection{Core Algorithm}
+The project implements a greedy algorithm in the \texttt{StringRing} Rust structure, which:
+\begin{itemize}
+    \item Converts input images to grayscale matrices
+    \item Maintains two key matrices:
+        \begin{itemize}
+            \item \texttt{input\_image}: Original grayscale values
+            \item \texttt{drawn\_image}: Current state of string art
+        \end{itemize}
+    \item Uses Bresenham's line algorithm for accurate line drawing
+    \item Implements a greedy selection strategy:
+        \begin{enumerate}
+            \item Calculates potential impact of all possible string placements
+            \item Selects the string placement that maximizes darkness in areas matching the input image
+            \item Updates the drawn image state and pixel weights
+        \end{enumerate}
+\end{itemize}
+
+\subsection{Implementation}
+The system is structured in multiple layers:
+\begin{itemize}
+    \item \textbf{Core Library} (\texttt{stringart}) that implements StringRing algorithm:
+    \item \textbf{WebAssembly Interface} (\texttt{wasm-stringart})
+    \item \textbf{Desktop Application} (\texttt{src-tauri})(deprecated)
+\end{itemize}
+
+\section{Evaluation}
+
+The project can be evaluated through its web interface, which provides several key metrics:
+
+
+The web interface (\url{https://omar-abdelgawad.github.io/string-art-app/}) provides an accessible platform for users to evaluate the algorithm's effectiveness and experiment with different parameters to achieve optimal results.
+
+\end{document} 
